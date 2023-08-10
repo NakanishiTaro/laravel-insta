@@ -21,10 +21,22 @@
                 @if(Auth::user()->id  === $user->id)
                    <a href="{{route('profile.edit')}}" class="btn btn-outline-secondary btn-sm fw-bold">Edit Profile</a>
                 @else
-                   <form action="" method="post">
+                   {{-- <form action="{{route('follow.store', $user->id)}}" method="post">
                        @csrf
                        <button type="submit" class="btn btn-primary btn-sm fw-bold">Follow</button>
-                   </form>
+                   </form> --}}
+                   @if($user->isFollowed())
+                        <form action="{{route('follow.destroy', $user->id)}}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-outline-secondary btn-sm fw-bold">Following</button>
+                        </form>
+                   @else
+                        <form action="{{route('follow.store', $user->id)}}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-primary btn-sm fw-bold">Follow</button>
+                        </form>
+                   @endif
                 @endif
             </div>
         </div>
@@ -36,13 +48,13 @@
                 </a>
             </div>
             <div class="col-auto">
-                <a href="" class="text-decoration-none text-dark">
-                    <strong>0</strong> follower
+                <a href="{{route('profile.followers', $user->id)}}" class="text-decoration-none text-dark">
+                    <strong>{{$user->followers->count()}}</strong> follower
                 </a>
             </div>
             <div class="col-auto">
-                <a href="" class="text-decoration-none text-dark">
-                    <strong>0</strong> following
+                <a href="{{route('profile.following', $user->id)}}" class="text-decoration-none text-dark">
+                    <strong>{{$user->following->count()}}</strong> following
                 </a>
             </div>
         </div>

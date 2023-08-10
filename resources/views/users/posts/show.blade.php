@@ -57,10 +57,22 @@
                                </div>                    
                             @else
                             {{-- else, show follow unfollow buttun --}}
-                            <form action="#" method="post">
+                            {{-- <form action="{{route('follow.store', $post->user->id)}}" method="post">
                                 @csrf
                                 <button type="submit" class="border-0 bg-transparent p-0 texy-primary">Follow</button>
-                            </form>
+                            </form> --}}
+                                @if($post->user->isFollowed())
+                                <form action="{{route('follow.destroy', $post->user->id)}}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-outline-secondary btn-sm fw-bold">Following</button>
+                                </form>
+                                @else
+                                        <form action="{{route('follow.store', $post->user->id)}}" method="post">
+                                            @csrf
+                                            <button type="submit" class="btn btn-primary btn-sm fw-bold">Follow</button>
+                                        </form>
+                                @endif
                             @endif
                         </div>
                     </div>

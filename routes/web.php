@@ -7,6 +7,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\FollowController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,11 +54,20 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     //this route will update the data of the login user
     Route::patch('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    //this route will serve the users.profile.followers
+    Route::get('/profile/{id}/followers', [ProfileController::class, 'followers'])->name('profile.followers');
+    Route::get('/profile/{id}/following', [ProfileController::class, 'following'])->name('profile.following');
 
     //LIKE
     //this route will save/store the like
     Route::post('/like/{post_id}/store', [LikeController::class, 'store'])->name('like.store');
     //this route will delete like
     Route::delete('/like/{post_id}/destroy', [LikeController::class, 'destroy'])->name('like.destroy');
+
+    //follow
+    //this route will save/store the follow 
+    Route::post('/follow/{user_id}/store', [FollowController::class, 'store'])->name('follow.store');
+    //this route will un follow he user
+    Route::delete('/follow/{user_id}/destroy', [FollowController::class, 'destroy'])->name('follow.destroy');
 
 });
