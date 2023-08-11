@@ -70,4 +70,7 @@ Route::group(['middleware' => 'auth'], function(){
     //this route will un follow he user
     Route::delete('/follow/{user_id}/destroy', [FollowController::class, 'destroy'])->name('follow.destroy');
 
+    //SUGGESTION
+    Route::get('/suggest/show', [HomeController::class, 'show'])->name('suggest.show');
+
 });

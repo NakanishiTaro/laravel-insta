@@ -80,7 +80,12 @@
                                 </button>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="account-dropdown">
-                                    {{-- [SOON] Admin Controls--}}
+                                    {{-- Admin Controls--}}
+                                    <a href="#" class="dropdown-item">
+                                        <i class="fa-solid fa-user-gear"></i> Admin
+                                    </a>
+
+                                    <hr class="dropdown-divider">
 
                                     {{-- Pofile --}}
                                     <a href="{{route('profile.show', Auth::user()->id)}}" class="dropdown-item">
@@ -108,7 +113,22 @@
         <main class="py-5">
             <div class="container">
                 <div class="row justify-content-center">
-                    {{-- [SOON] Admin Controks --}}
+                    {{-- Admin Controks --}}
+                    @if(request()->is('admin/*'))
+                       <div class="col-3">
+                           <div class="list-group">
+                              <a href="#" class="list-group-item">
+                                <i class="fa-solid fa-users"></i> Users
+                              </a>
+                              <a href="#" class="list-group-item">
+                                <i class="fa-solid fa-newspaper"></i> Posts
+                              </a>
+                              <a href="#" class="list-group-item">
+                                <i class="fa-solid fa-tags"></i> Categories
+                              </a>
+                           </div>
+                       </div>
+                    @endif
                     <div class="col-9">
                          @yield('content')
                     </div>
