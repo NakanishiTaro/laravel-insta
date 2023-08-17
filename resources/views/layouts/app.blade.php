@@ -81,9 +81,11 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="account-dropdown">
                                     {{-- Admin Controls--}}
-                                    <a href="#" class="dropdown-item">
-                                        <i class="fa-solid fa-user-gear"></i> Admin
-                                    </a>
+                                    @can('admin')
+                                        <a href="{{route('admin.users')}}" class="dropdown-item">
+                                            <i class="fa-solid fa-user-gear"></i> Admin
+                                        </a>
+                                    @endcan
 
                                     <hr class="dropdown-divider">
 
@@ -113,17 +115,17 @@
         <main class="py-5">
             <div class="container">
                 <div class="row justify-content-center">
-                    {{-- Admin Controks --}}
+                    {{-- Admin Controls --}}
                     @if(request()->is('admin/*'))
                        <div class="col-3">
                            <div class="list-group">
-                              <a href="#" class="list-group-item">
+                              <a href="{{route('admin.users')}}" class="list-group-item {{request()->is('admin/users') ? 'active' : ''}}">
                                 <i class="fa-solid fa-users"></i> Users
                               </a>
-                              <a href="#" class="list-group-item">
+                              <a href="{{route('admin.posts')}}" class="list-group-item {{request()->is('admin/posts') ? 'active' : ''}}">
                                 <i class="fa-solid fa-newspaper"></i> Posts
                               </a>
-                              <a href="#" class="list-group-item">
+                              <a href="{{route('admin.categories')}}" class="list-group-item {{request()->is('admin/categories') ? 'active' : ''}}">
                                 <i class="fa-solid fa-tags"></i> Categories
                               </a>
                            </div>
@@ -138,3 +140,13 @@
     </div>
 </body>
 </html>
+{{--
+
+    {{request()->is('admin/users') ? 'active' : ''}}
+
+    if({request()->is('admin/users')) {
+        class='list-group-item active' 
+    } else {
+        class='list-group-item'
+    }
+     --}}

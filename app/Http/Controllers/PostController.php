@@ -58,31 +58,6 @@ class PostController extends Controller
         $this->post->categoryPost()->createMany($category_post);
 
         return redirect()->route('index');
-    //     $request->validate([
-    //         'category'    => 'required|array|between:1,3',
-    //         'description' => 'required|string|min:1|max:1000',
-    //         'image'       => 'required|mimes:jpg,png,jpeg,gif|max:1048'
-    //     ]);
-        
-    //     //$ is post
-    //     $this->post->user_id = Auth::user()->id;
-    //     //this will return and the base64 encode image
-    //     $this->post->image   = 'date:image/' . $request->image->extension() . ';base64,' . base64_encode(file_get_contents($request->image));
-    //     $this->post->description = $request->description;
-    //     $this->post->save();
-
-    //     //[1,2]
-    //     foreach($request->category as $category_id)
-    //     {
-    //         $category_post[] = [
-    //             'category_id' => $category_id
-    //         ];
-    //     }
-    //  // ref; post id = 1
-    //  // category id = 1, 2
-    //    $this->post->categoryPost()->createMany($category_post);
-
-    //    return redirect()->route('index');
     }
 
     public function show($id)
@@ -154,7 +129,9 @@ class PostController extends Controller
 
     public function destroy($id)
     {
-       $this->post->destroy($id);
+    //    $this->post->destroy($id);
+       $post = $this->post->findOrFail($id);
+       $post->forceDelete();
        return redirect()->route('index');
     }
 

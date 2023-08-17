@@ -8,6 +8,9 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Admin\PostsController;
+use App\Http\Controllers\Admin\CategoriesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,5 +75,27 @@ Route::group(['middleware' => 'auth'], function(){
 
     //SUGGESTION
     Route::get('/suggest/show', [HomeController::class, 'show'])->name('suggest.show');
+
+    //ADMIN
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function(){
+        //USERS
+        Route::get('/users', [UsersController::class, 'index'])->name('users');
+        //this route will deactivate a certain user  in admin panel
+        Route::delete('/users/{id}/deactivate', [UsersController::class, 'deactivate'])->name('users.deactivate');
+        //this route will activate a certain user that is recently deactivate
+        Route::patch('/users/{id}/activate', [UsersController::class, 'activate'])->name('users.activate');
+        
+        //POSTS
+        Route::get('/posts', [PostsController::class, 'index'])->name('posts');
+        Route::delete('/posts/{id}/hide', [PostsController::class, 'hide'])->name('posts.hide');
+        Route::patch('/posts/{id}/unhide', [PostsController::class, 'unhide'])->name('posts.unhide');
+
+        //category
+        Route::get('/categories', [CategoriesController::class, 'index'])->name('categories');
+        Route::post('/categories/store', [CategoriesController::class, 'store'])->name('categories.store');
+        Route::patch('/categories/{id}/update', [CategoriesController::class, 'update'])->name('categories.update');
+        Route::delete('/categories/{id}/destroy', [CategoriesController::class, 'destroy'])->name('categories.destroy');
+
+    });
 
 });

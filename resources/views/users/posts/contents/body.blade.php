@@ -38,11 +38,13 @@
         </div>
         {{-- category --}}
         <div class="col text-end">
-            @foreach($post->categoryPost as $category_post)
+            @forelse($post->categoryPost as $category_post)
                 <div class="badge bg-secondary bg-opacity-50">
                     {{$category_post->category->name}}
                 </div>
-            @endforeach
+            @empty   
+                <div class="badge bg-dark text-wrap">Uncategorized</div> 
+            @endforelse
         </div>
     </div>
 
