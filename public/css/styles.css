@@ -47,3 +47,9 @@
 .icon-md{
     font-size:3.5rem;
 }
+
+.image-lg {
+    width: 9rem;
+    height: 9rem;
+    object-fit: cover;
+}

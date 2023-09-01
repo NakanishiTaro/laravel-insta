@@ -73,12 +73,13 @@ class RegisterController extends Controller
 
         $details = [
             'name' => $user->name,
-            'appUrl' => config('app.url')
+            'appUrl' => 'http://donna-insta-app-06c5ca165eff.herokuapp.com/login'
         ];
 
         Mail::send('users.emails.register-confirmation', $details, function($message) use ($user){
             $message
-                ->from(env('MAIL_FROM_ADDRESS'), config('app.name'))
+                // ->from(env('MAIL_FROM_ADDRESS'), config('app.name'))
+                ->from('noreply@igram.com')
                 ->to($user->email, $user->name)
                 ->subject('Thank you for registering in Kredo IG App!');
         });

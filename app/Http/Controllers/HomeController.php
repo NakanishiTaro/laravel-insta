@@ -104,4 +104,10 @@ class HomeController extends Controller
               ->with('suggested_users', $suggested_users);
     }
 
+    public function search(Request $request)
+    {
+        $users = $this->user->where('name', 'like', '%' . $request->search . '%')->get();
+        return view('users.search')->with('users', $users)->with('search', $request->search);
+    }
+
 }

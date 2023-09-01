@@ -31,6 +31,7 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/', [HomeController::class, 'index'])->name('index');
+    Route::get('/people', [HomeController::class, 'search'])->name('search');
     //this route will serve the users>pots>create.blade
     Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
     //this will save the post in the db
@@ -84,18 +85,20 @@ Route::group(['middleware' => 'auth'], function(){
         Route::delete('/users/{id}/deactivate', [UsersController::class, 'deactivate'])->name('users.deactivate');
         //this route will activate a certain user that is recently deactivate
         Route::patch('/users/{id}/activate', [UsersController::class, 'activate'])->name('users.activate');
+        Route::get('/users/search', [UsersController::class, 'searchResults'])->name('search.users');
         
         //POSTS
         Route::get('/posts', [PostsController::class, 'index'])->name('posts');
         Route::delete('/posts/{id}/hide', [PostsController::class, 'hide'])->name('posts.hide');
         Route::patch('/posts/{id}/unhide', [PostsController::class, 'unhide'])->name('posts.unhide');
+        Route::get('/posts/search', [PostsController::class, 'searchResults'])->name('posts.search');
 
         //category
         Route::get('/categories', [CategoriesController::class, 'index'])->name('categories');
         Route::post('/categories/store', [CategoriesController::class, 'store'])->name('categories.store');
         Route::patch('/categories/{id}/update', [CategoriesController::class, 'update'])->name('categories.update');
         Route::delete('/categories/{id}/destroy', [CategoriesController::class, 'destroy'])->name('categories.destroy');
-
+        Route::get('/categories/search', [CategoriesController::class, 'searchResults'])->name('categories.search');
     });
 
 });

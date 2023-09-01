@@ -69,4 +69,22 @@ class CategoriesController extends Controller
         $this->category->destroy($id);
         return redirect()->back();
     }
+
+    private function search(Request $request)
+    {
+        $request->validate([
+            'search' => 'required||regex:/^[a-zA-Z]+$/u'
+        ]);
+
+        $categories = $this->category->where('categories.name', 'like', '%' . $request->search . '%')->get();
+                            
+        return $categories;                            
+    }
+
+    public function searchResults(Request $request)
+    {
+        $categories = $this->search($request);
+
+        return view('admin.categories.search')->with('categories', $categories)->with('search', $request->search);
+    }    
 }

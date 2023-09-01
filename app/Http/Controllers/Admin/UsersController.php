@@ -35,4 +35,26 @@ class UsersController extends Controller
         $this->user->onlyTrashed()->findOrFail($id)->restore();
         return redirect()->back();
     }
+
+    private function search(Request $request)
+    {
+        $request->validate([
+            'search' => 'regex:/^[0-9a-zA-Z.@]+$/'
+        ],
+        [
+            'search'.'.regex' => 'Accepts numbers, alphabets, "." or "@" only'
+        ]);
+
+        $users = $this->user->where('name', 'like', '%' . $request->search . '%')
+                            ->orWhere('email', 'like', '%' . $request->search . '%')
+                            ->withTrashed()->latest()->get();
+        return $users;
+    }
+
+    public function searchResults(Request $request)
+    {
+        $users = $this->search($request);
+
+        return view('admin.users.search')->with('users', $users)->with('search', $request->search);
+    }
 }

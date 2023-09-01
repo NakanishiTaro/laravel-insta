@@ -41,4 +41,8 @@ class Post extends Model
     {
         return $this->likes()->where('user_id', Auth::user()->id)->exists();
     }
+
+    public function category() {
+        return $this->belongsTo(Category::class);
+    }
 }

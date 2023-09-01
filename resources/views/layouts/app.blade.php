@@ -37,9 +37,18 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     {{-- [SOON] Searrch bar here. Show it a user logs in. --}}
-                    <ul class="navbar-nav me-auto">
+                    {{-- <ul class="navbar-nav me-auto">
 
-                    </ul>
+                    </ul> --}}
+                    @auth 
+                      @if(!request()->is('admin/*'))
+                         <ul class="navbar-nav ms-auto">
+                            <form action="{{route('search')}}" style="width: 300px">
+                                <input type="search" name="search" class="form-control form-control-sm" placeholder="Serch...">
+                            </form>
+                         </ul>
+                      @endif
+                    @endauth
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
